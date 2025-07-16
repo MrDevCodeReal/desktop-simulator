@@ -18,6 +18,7 @@ canvas = pygame.surface.Surface((screenSize[0]//resolution, screenSize[1]//resol
 pygame.mouse.set_visible(False)
 cursorImage = pygame.image.load("cursor.png")
 wallpaper = pygame.image.load("wallpaper.png")
+startIcon = pygame.image.load("startIcon.png")
 
 #game loop
 running = True
@@ -38,14 +39,18 @@ while running:
         if (event.type == QUIT) or (event.type == KEYDOWN and event.key == K_ESCAPE):
             running = False
 
+    # draw a taskbar placeholder for now
+    pygame.draw.rect(canvas, "#847c87", (0, canvas.get_size()[1] - 10, canvas.get_size()[0], 10))
+    canvas.blit(startIcon, (0, canvas.get_size()[1]-10))
+
     #display the cursor on the canvas
     canvas.blit(cursorImage, (mousePos[0]//resolution, mousePos[1]//resolution))
 
-    #draw a taskbar placeholder for now
-
     #display the canvas on the screen
     screen.blit(pygame.transform.scale(canvas, screenSize), (0, 0))
-
     pygame.display.flip()
+
+    #cap fps
+    clock.tick(30)
 
 pygame.quit()
